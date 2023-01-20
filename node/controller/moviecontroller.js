@@ -1,16 +1,12 @@
 const axios = require("axios");
 
-const url =
-  "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=eee8f2920fa28653902a137dcad5b867";
-
-const sortMovies = (data) => {
-  
-};
-
 //get all movies
 const getMovies = async (req, res) => {
   try {
-    const rev = await axios.get(url);
+    const value = req.params.movieId;
+    const rev = await axios.get(
+      `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=eee8f2920fa28653902a137dcad5b867&page=${value}`,
+    );
 
     const movie = rev.data.results;
 
@@ -20,9 +16,8 @@ const getMovies = async (req, res) => {
     });
 
     res.send(new_movie);
-    
   } catch (error) {
-    console.error(error);
+    res.send([])
   }
 };
 
